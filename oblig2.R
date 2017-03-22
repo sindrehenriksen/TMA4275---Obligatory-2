@@ -44,18 +44,25 @@ Rhat_0 <- survfit(Surv(y) ~ x2, subset={x2==0})
 n_0 = length(Rhat_0$surv)
 Rhathat_0 <- (tail(Rhat_0$surv, n_0-1) + head(Rhat_0$surv, n_0-1)) / 2
 time_0 <- tail(Rhat_0$time, n_0-1)
-logminlog_0 <- log(-log(Rhathat_0))
+logminlogR_0 <- log(-log(Rhathat_0))
 
 Rhat_1 <- survfit(Surv(y) ~ x2, subset={x2==1})
 n_1 = length(Rhat_1$surv)
 Rhathat_1 <- (tail(Rhat_1$surv, n_1-1) + head(Rhat_1$surv, n_1-1)) / 2
 time_1 <- tail(Rhat_1$time, n_1-1)
-logminlog_1 <- log(-log(Rhathat_1))
+logminlogR_1 <- log(-log(Rhathat_1))
 
-plot(time_0, logminlog_0)
-points(time_1, logminlog_1, col=2)
-plot(log(time_0), logminlog_0)
-points(log(time_1), logminlog_1, col=2)
+plot(time_0, logminlogR_0, 
+     xlab="time",
+     ylab="logminlogR")
+points(time_1, logminlogR_1, col=2)
+legend("bottomright", legend=c("x2 = 0", "x2 = 1"), col=c(1, 2), pch=1)
+
+plot(log(time_0), logminlogR_0, 
+     xlab="time",
+     ylab="logminlogR")
+points(log(time_1), logminlogR_1, col=2)
+legend("bottomright", legend=c("x2 = 0", "x2 = 1"), col=c(1, 2), pch=1)
 
 ## ---- 3
 
