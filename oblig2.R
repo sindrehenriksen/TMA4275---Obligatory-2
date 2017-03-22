@@ -25,13 +25,11 @@ smoothSEcurve <- function(yy, xx) {
 coxreg <- coxph(Surv(y, delta)~1)
 mres <- residuals(coxreg, type="martingale")
 
-par(mfrow=c(2,1))
 plot(x1, mres)
 smoothSEcurve(mres, x1)
 plot(log(x1), mres)
 smoothSEcurve(mres, log(x1))
 
-par(mfrow=c(1,1))
 plot(x2, mres)
 smoothSEcurve(x2, mres)
 
@@ -55,7 +53,6 @@ Rhathat_1 <- (tail(Rhat_1$surv, n_1-1) + head(Rhat_1$surv, n_1-1)) / 2
 time_1 <- tail(Rhat_1$time, n_1-1)
 logminlogR_1 <- log(-log(Rhathat_1))
 
-par(mfrow=c(2,1))
 plot(time_0, logminlogR_0, type="l",
      xlab="time",
      ylab="logminlogR")
