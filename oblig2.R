@@ -1,7 +1,7 @@
 data <- read.table("data.dat")
 
 ## ---- 1
-#hei og hå
+#forskjell
 ## ---- 2
 
 ## ---- 3
