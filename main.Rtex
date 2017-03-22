@@ -40,11 +40,7 @@ options(digits = 2)
 <<1, fig.align="center", fig.height=5, fig.width=5, fig.cap=c("Plot of the Martingale residuals versus x1.", "Plot of the Martingale residuals versus ln(x1).", "Plot of the Martingale resiudals versus x2."), fig.pos="htbp">>=
 @
 
-hei \ref{fig:12}
-
-% <<plot1, fig.align="center", fig.height=5, fig.width=5, fig.cap="Plot of the Kaplan-Meier estimator $\\hat{R}(t)$.", fig.pos="htbp">>=
-% <<task1>>
-% @
+As we see from figure \ref{fig:11} and figure \ref{fig:12}
 
 \section{}
 
