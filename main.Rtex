@@ -13,7 +13,7 @@
 % \newcommand\given[1][]{\:#1\vert\:}
 % \newcommand{\N}{\mathbb{N}}
 % \newcommand{\E}{\mathrm{E}}
-\newcommand{\P}{\mathrm{P}}
+% \newcommand{\P}{\mathrm{P}}
 % \newcommand{\Var}{\mathrm{Var}}
 % \newcommand{\Cov}{\mathrm{Cov}}
 % \newcommand{\me}{\mathrm{e}}
@@ -37,12 +37,16 @@ options(digits = 2)
 @
 
 \section{}
-<<1, fig.align="center", fig.height=5, fig.width=5, fig.cap=c("Plot of the Martingale residuals versus x1.", "Plot of the Martingale residuals versus ln(x1).", "Plot of the Martingale resiudals versus x2."), fig.pos="htbp">>=
+The R-code below fits a Cox proportional hazards model to the provided data without any covariates included and plots the Martingale residuals against the covariates and the transformation $ln(x_1)$. The plots in figure \ref{fig:11} and figure \ref{fig:12} indicate that the relationship between the response variable $y$ and the natural logarithm of the covariate $x_1$ is closer to being linear than the relationship between $y$ and $x_1$.
+
+<<1, fig.align="center", fig.height=3, fig.width=4, fig.cap=c("Plot of the Martingale residuals versus $x_1$.", "Plot of the Martingale residuals versus $ln(x_1)$.", "Plot of the Martingale resiudals versus $x_2$."), fig.pos="htbp">>=
 @
 
-As we see from figure \ref{fig:11} and figure \ref{fig:12}
-
 \section{}
+klap
 
+<<2, fig.align="center", fig.height=c(3, 3, 4), fig.width=c(4, 4, 4), fig.cap=c("klap.", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ (black) and $x_2 = 1$ (red) against time.", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ (black) and $x_2 = 1$ (red) against ln(time)."), fig.pos="htbp">>=
+@
 
+Figure \ref{fig:22} shows a plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ and $x_2 = 1$ against time. If the data is from a Weibull-distribution, we would expect the vertical distance between the two lines to be constant and equal to $\beta_2$. The same is true for the plot against $ln(y)$ in figure \ref{fig:23}. Furthermore, the points in the last plot should be on a straight line. We would definitely not reject the possibility of an underlying Weibull-distribution based on any of these tests, especially if the final point (at time $y \approx 14.2$) is disregarded.
 \end{document}
