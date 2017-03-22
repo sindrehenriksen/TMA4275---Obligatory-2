@@ -3,6 +3,7 @@ data <- read.table("data.dat")
 ## ---- 1
 #hei og hå
 ## ---- 2
+aoirngaerv
 
 ## ---- 3
 
