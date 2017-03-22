@@ -39,7 +39,7 @@ options(digits = 2)
 \section{}
 The R-code below fits a Cox proportional hazards model to the provided data without any covariates included and plots the Martingale residuals against the covariates and the transformation $ln(x_1)$. The plots in figure \ref{fig:11} and figure \ref{fig:12} indicate that the relationship between the response variable $y$ and the natural logarithm of the covariate $x_1$ is closer to being linear than the relationship between $y$ and $x_1$.
 
-<<1, fig.align="center", fig.height=3, fig.width=4, fig.cap=c("Plot of the Martingale residuals versus $x_1$.", "Plot of the Martingale residuals versus $ln(x_1)$.", "Plot of the Martingale resiudals versus $x_2$."), fig.pos="htbp">>=
+<<1, fig.align="center",  fig.cap=c("Plot of the Martingale residuals versus $x_1$.", "Plot of the Martingale residuals versus $ln(x_1)$.", "Plot of the Martingale resiudals versus $x_2$."), fig.pos="htbp">>=
 @
 
 \section{}
