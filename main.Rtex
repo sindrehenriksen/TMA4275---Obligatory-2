@@ -30,16 +30,13 @@
 \newpage
 
 <<echo=FALSE, cache=FALSE>>=
-read_chunk("oblig1.R")
+read_chunk("oblig2.R")
 options(digits = 2)
 @
 
 \section{}
-
-
-
-% <<echo=FALSE, message = FALSE, preliminary>>=
-% @
+<<echo=FALSE, message = FALSE, 1>>=
+@
 
 % <<plot1, fig.align="center", fig.height=5, fig.width=5, fig.cap="Plot of the Kaplan-Meier estimator $\\hat{R}(t)$.", fig.pos="htbp">>=
 % <<task1>>
