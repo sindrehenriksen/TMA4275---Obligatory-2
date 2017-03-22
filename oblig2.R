@@ -1,7 +1,16 @@
+library(survival)
 data <- read.table("data.dat")
+attach(data)
 
 ## ---- 1
-#forskjell
+coxreg <- coxph(Surv(y, delta)~1)
+mres <- residuals(coxreg, type="martingale")
+plot(x1, mres)
+plot(x2, mres)
+# Rhat <- survfit(coxreg)
+# Zhat <- -log(R$surv)
+# M <- delta - Zhat
+
 ## ---- 2
 
 ## ---- 3
