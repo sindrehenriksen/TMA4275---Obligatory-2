@@ -28,7 +28,7 @@ mres <- residuals(coxreg, type="martingale")
 plot(x1, mres)
 smoothSEcurve(mres, x1)
 plot(log(x1), mres)
-smoothSEcurve(log(x1), mres)
+smoothSEcurve(mres, log(x1))
 plot(x2, mres)
 smoothSEcurve(x2, mres)
 
@@ -42,15 +42,15 @@ smoothSEcurve(sres,failure_times)
 
 Rhat_0 <- survfit(Surv(y) ~ x2, subset={x2==0})
 n_0 = length(Rhat_0$surv)
-Rhathat_0 <- (tail(Rhat$surv, n_0-1)
-time_0 <- Rhat_0$time
-# surv_0 <- Rhat_0$surv
-logminlog_0 <- log(-log(Rhat_0$surv))
+Rhathat_0 <- (tail(Rhat_0$surv, n_0-1) + head(Rhat_0$surv, n_0-1)) / 2
+time_0 <- tail(Rhat_0$time, n_0-1)
+logminlog_0 <- log(-log(Rhathat_0))
 
 Rhat_1 <- survfit(Surv(y) ~ x2, subset={x2==1})
-time_1 <- Rhat_1$time
-# surv_1 <- Rhat_1$surv
-logminlog_1 <- log(-log(Rhat_1$surv))
+n_1 = length(Rhat_1$surv)
+Rhathat_1 <- (tail(Rhat_1$surv, n_1-1) + head(Rhat_1$surv, n_1-1)) / 2
+time_1 <- tail(Rhat_1$time, n_1-1)
+logminlog_1 <- log(-log(Rhathat_1))
 
 plot(time_0, logminlog_0)
 points(time_1, logminlog_1, col=2)
