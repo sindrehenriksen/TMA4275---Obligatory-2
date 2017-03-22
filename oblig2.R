@@ -1,3 +1,5 @@
+rm(list=ls())
+
 ## ---- preliminary
 library(survival)
 data <- read.table("data.dat")
@@ -22,6 +24,7 @@ smoothSEcurve <- function(yy, xx) {
 ## ---- 1
 coxreg <- coxph(Surv(y, delta)~1)
 mres <- residuals(coxreg, type="martingale")
+
 plot(x1, mres)
 smoothSEcurve(mres, x1)
 plot(log(x1), mres)
@@ -32,15 +35,27 @@ smoothSEcurve(x2, mres)
 ## ---- 2
 coxreg2 <- coxph(Surv(y,delta)~x2)
 sres <- residuals(coxreg2,type="schoenfeld")
-failure_times <- delta*y
+failure_times <- sort(y[delta==1])
 failure_times <- failure_times[failure_times != 0]
 plot(failure_times,sres)
 smoothSEcurve(sres,failure_times)
 
-Rhat <- survfit(coxreg)
-logminlogR <- log(-log(Rhat$surv))
-plot(sort(y), logminlogR)
-plot(log(sort(y)), logminlogR~x2)
+Rhat_0 <- survfit(Surv(y) ~ x2, subset={x2==0})
+n_0 = length(Rhat_0$surv)
+Rhathat_0 <- (tail(Rhat$surv, n_0-1)
+time_0 <- Rhat_0$time
+# surv_0 <- Rhat_0$surv
+logminlog_0 <- log(-log(Rhat_0$surv))
+
+Rhat_1 <- survfit(Surv(y) ~ x2, subset={x2==1})
+time_1 <- Rhat_1$time
+# surv_1 <- Rhat_1$surv
+logminlog_1 <- log(-log(Rhat_1$surv))
+
+plot(time_0, logminlog_0)
+points(time_1, logminlog_1, col=2)
+plot(log(time_0), logminlog_0)
+points(log(time_1), logminlog_1, col=2)
 
 ## ---- 3
 
