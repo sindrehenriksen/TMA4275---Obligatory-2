@@ -1,3 +1,4 @@
+## ---- preliminary
 library(survival)
 data <- read.table("data.dat")
 attach(data)
@@ -26,6 +27,7 @@ smoothSEcurve(mres, x1)
 plot(log(x1), mres)
 smoothSEcurve(log(x1), mres)
 plot(x2, mres)
+smoothSEcurve(x2, mres)
 
 # Rhat <- survfit(coxreg)
 # Zhat <- -log(R$surv)
