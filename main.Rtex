@@ -8,8 +8,7 @@
 % \usepackage{listings}
 \usepackage{bm}
 
-\renewcommand{\thesection}{Problem \arabic{section}}
-\renewcommand{\thesubsection}{\alph{subsection})}
+\renewcommand{\thesection}{\arabic{section}.}
 
 % \newcommand\given[1][]{\:#1\vert\:}
 % \newcommand{\N}{\mathbb{N}}
@@ -34,12 +33,20 @@ read_chunk("oblig2.R")
 options(digits = 2)
 @
 
-\section{}
-<<echo=FALSE, message = FALSE, 1>>=
+<<echo=FALSE, message = FALSE, preliminary>>=
 @
+
+\section{}
+<<1, fig.align="center", fig.height=5, fig.width=5, fig.cap=c("Plot of the Kaplan-Meier estimator $\\hat{R}(t)$.", "2", "3"), fig.pos="htbp">>=
+@
+
+hei \ref{fig:12}
 
 % <<plot1, fig.align="center", fig.height=5, fig.width=5, fig.cap="Plot of the Kaplan-Meier estimator $\\hat{R}(t)$.", fig.pos="htbp">>=
 % <<task1>>
 % @
+
+\section{}
+
 
 \end{document}
