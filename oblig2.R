@@ -59,8 +59,21 @@ points(log(time_1), logminlog_1, col=2)
 
 ## ---- 3
 
+new_data <- data
+new_data$x1 = log(new_data$x1)
+coxreg_ex <- coxph(Surv(y, delta)~x1 + x2, data=new_data)
+summary(coxreg_ex)
+
 
 ## ---- 4
+
+sres_ex <- residuals(coxreg_ex,type="schoenfeld")
+plot(failure_times,sres_ex[,1])
+smoothSEcurve(sres_ex[,1], failure_times)
+plot(failure_times,sres_ex[,2])
+smoothSEcurve(sres_ex[,2],failure_times)
+
+cox.zph(coxreg_ex)
 
 ## ---- 5
 
