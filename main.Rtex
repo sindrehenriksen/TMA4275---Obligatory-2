@@ -29,12 +29,14 @@
 \tableofcontents
 \newpage
 
+<<echo=FALSE, cache=FALSE>>=
+read_chunk("oblig1.R")
+options(digits = 2)
+@
+
 \section{}
 
-% <<echo=FALSE, cache=FALSE>>=
-% read_chunk("oblig1.R")
-% options(digits = 2)
-% @
+
 
 % <<echo=FALSE, message = FALSE, preliminary>>=
 % @
