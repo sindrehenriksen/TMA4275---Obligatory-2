@@ -29,12 +29,7 @@ smoothSEcurve(log(x1), mres)
 plot(x2, mres)
 smoothSEcurve(x2, mres)
 
-# Rhat <- survfit(coxreg)
-# Zhat <- -log(R$surv)
-# M <- delta - Zhat
-
 ## ---- 2
-
 coxreg2 <- coxph(Surv(y,delta)~x2)
 sres <- residuals(coxreg2,type="schoenfeld")
 failure_times <- delta*y
@@ -42,7 +37,13 @@ failure_times <- failure_times[failure_times != 0]
 plot(failure_times,sres)
 smoothSEcurve(sres,failure_times)
 
+Rhat <- survfit(coxreg)
+logminlogR <- log(-log(Rhat$surv))
+plot(sort(y), logminlogR)
+plot(log(sort(y)), logminlogR~x2)
+
 ## ---- 3
+
 
 ## ---- 4
 
