@@ -43,9 +43,9 @@ The R-code below fits a Cox proportional hazards model to the provided data with
 @
 
 \section{}
-The covariate $x_2$ is included in the model and the Cox PH model is fitted. The Schoenfeld residuals is then found and plotted against the failure times. For a correct model one would expect the residuals the be randomly scattered about the horizontal zero-line, with the mean being zero. This is not the case in our plot, as seen in \ref{fig:4}, where the LOESS line clearly deviates from zero.
+The covariate $x_2$ is included in the model and the Cox PH model is fitted. The Schoenfeld residuals is then calculated and plotted against the failure times. The Schoenfeld residuals can be used for checking the assumption of proportional hazards. For a correct model one would expect the residuals to be centered around zero. This is not the case in our plot, seen in \ref{fig:14}, where the LOESS line clearly deviates from zero. The assumption of PH might therefore be incorrect. 
 
-<<2, fig.align="center", fig.cap=c("The Schoenfeld residuals plotted against the observed failure times. A LOESS for the data is also shown", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ (black) and $x_2 = 1$ (red) against time.", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ (black) and $x_2 = 1$ (red) against ln(time)."), fig.pos="htbp">>=
+<<2, fig.align="center", fig.width=4, fig.height=4, fig.cap=c("The Schoenfeld residuals plotted against the observed failure times. A LOESS for the data is also shown", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ (black) and $x_2 = 1$ (red) against time.", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ (black) and $x_2 = 1$ (red) against ln(time)."), fig.pos="htbp">>=
 @
 
 Figure \ref{fig:22} shows a plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ and $x_2 = 1$ against time. If the data is from a Weibull-distribution, we would expect the vertical distance between the two lines to be constant and equal to $\beta_2$. The same is true for the plot against $ln(y)$ in figure \ref{fig:23}. Furthermore, the points in the last plot should be on a straight line. We would definitely not reject the possibility of an underlying Weibull-distribution based on any of these tests, especially if the final point (at time $y \approx 14.2$) is disregarded.
@@ -55,14 +55,18 @@ Figure \ref{fig:22} shows a plot of the log-minus-log of the Kaplan-Meier estima
 <<3>>=
 @
 
-By looking at the plots of the covariates against their assosciated Martingale residuals in figure \ref{fig:1} and \ref{fig:2} , we see that taking the logarhitm of $x_1$ produces a LOESS line that suggest a linear, or close to linear, relation between the covariates and their residuals and we therefore choose to include $ln(x_1)$ as a covariate instead of $x_1$. A new Cox PH model is then fiited using the transformed covariate $ln(x_1)$ and $x_2$. The covariate $x_2$ is a binary variable and the model does not benefit from transforming this. The new model produces very low p-values, which can by seen by calling \texttt{summary(coxreg\_ex)}, as in the code. The low p-value leads us to reject the null hypothesis, which suggests $\beta = 0$. The p-value found by the Wald test is, while still very small, significantly higher than the one produced by the likelihood ratio test. \textbf{SVADA}: This might be due to a incorrect assumption regarding the sampling which would lead to the Wald-test relying on an incorrect assumption of normally distributed i.i.d. samples. Such an assumption is not made for the likelihood ratio test. 
+By looking at the plots of the covariates against their associated Martingale residuals in figure \ref{fig:31} and \ref{fig:32} , we see that taking the logarithm of $x_1$ produces a LOESS line that suggest a linear relation between the covariate and it's residual. We therefore choose to include $ln(x_1)$ as a covariate instead of $x_1$. A new Cox PH model is then fitted using the transformed covariate $ln(x_1)$ and the ordinary covariate $x_2$. The covariate $x_2$ is a binary variable and the model does not benefit from transforming this. The new model produces very low p-values, which can by seen by calling \texttt{summary(coxreg\_ex)}, as in the code. The low p-value leads us to reject the null hypothesis, which suggests $\beta = 0$. The p-value found by the Wald test is, while still very small, significantly higher than the one produced by the likelihood ratio test. The difference in p-values may come from incorrect assumptions regarding the sampling of covariates. 
+
+% Wald test relies on the assumption of a  normally distributed $\beta$ which might not be the case. This is in turn based on the assumption that maximum likelihood estimators are normally distributed when the number of samples increases. The likelihood ratio test does not make any such assumptions
+
+
 
 \section{}
 
 <<4>>=
 @
 
-The exteneded model produces Schoenfeld residuals that seem to be more evenly distributed about the zero-line. This suggest that the decision of transforming $x_1$ and including $x_2$ were reasonable choices. The LOESS lines in both plots changes less rapidly and are closer to zero. 
+The extended model produces Schoenfeld residuals that seem to be more evenly distributed about zero than the previous model. This suggest that the decision of transforming $x_1$ and including $x_2$ were reasonable choices. The LOESS lines in both plots changes less rapidly and are closer to zero. 
 
 The formal hypothesis test of the PH assumption leads us to reject the null hypothesis that suggests that the PH assumption is not correct. The p-value obtained by calling \texttt{cox.zph} leads us to reject even at significance level 0.01.
 \end{document}
