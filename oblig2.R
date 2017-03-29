@@ -81,6 +81,23 @@ smoothSEcurve(sres_ex[,2],failure_times)
 cox.zph(coxreg_ex)
 
 ## ---- 5
+par(mfrow=c(2,2))
+R0 = survfit(coxreg_ex)
+plot(R0, 
+     xlab='y',
+     ylab=expression('R'[0]))
+
+plot(survfit(coxreg_ex, newdata=data.frame(x1=c(0.2), x2)),
+     xlab='y',
+     ylab='R')
+plot(survfit(coxreg_ex, newdata=data.frame(x1=c(1), x2)),
+    xlab='y',
+    ylab='R')
+# plot(c(0,R0$time), c(1, R0$surv^exp(coxreg_ex$coefficients[['x1']] + coxreg_ex$coefficients[['x2']])), type='s')
+plot(survfit(coxreg_ex, newdata=data.frame(x1=c(5), x2)),
+     xlab='y',
+     ylab='R')
+par(mfrow=c(1,1))
 
 ## ---- 6
 
