@@ -35,11 +35,11 @@ smoothSEcurve(x2, mres)
 
 ## ---- 2
 coxreg2 <- coxph(Surv(y,delta)~x2)
-sres <- residuals(coxreg2,type="schoenfeld")
+sres2 <- residuals(coxreg2,type="schoenfeld")
 failure_times <- sort(y[delta==1])
 failure_times <- failure_times[failure_times != 0]
-plot(failure_times,sres)
-smoothSEcurve(sres,failure_times)
+plot(failure_times,sres2)
+smoothSEcurve(sres2,failure_times)
 
 Rhat_0 <- survfit(Surv(y) ~ x2, subset={x2==0})
 n_0 = length(Rhat_0$surv)
@@ -101,6 +101,10 @@ plot(survfit(coxreg_ex, newdata=data.frame(x1=c(5), x2)),
 par(mfrow=c(1,1))
 
 ## ---- 6
+
+plot(log2(-log2(R0$surv)),log2(R0$time),xlab='t*',ylab=expression('R*'[0]))
+smoothSEcurve(log2(R0$time),log2(-log2(R0$surv)))
+
 
 ## ---- 7
 weib_reg = survreg(coxreg_ex, dist='weibull')
