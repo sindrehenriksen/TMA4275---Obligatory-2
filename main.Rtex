@@ -63,7 +63,7 @@ By looking at the plots of the covariates against their associated Martingale re
 
 \section{}
 
-<<4, fig.align="center", fig.width=4, fig.height=3, fig.cap=c("caption klap", "caption klap"), fig.pos="!htbp">>=
+<<4, fig.align="center", fig.width=4, fig.height=3, fig.cap=c("Plots of Schoenfeld residuals for covariate $x1$ against failure times", "Plots of Schoenfeld residuals for covariate $x2$ against failure times"), fig.pos="!htbp">>=
 @
 
 The extended model produces Schoenfeld residuals that seem to be more evenly distributed about zero than the previous model. This suggest that the decision of transforming $x_1$ and including $x_2$ were reasonable choices. The LOESS lines in both plots changes less rapidly and are closer to zero. 
@@ -78,7 +78,8 @@ Here we produce an estimate of the baseline survival function $\hat{R_0}(t)$ usi
 
 \section{}
 
-<<6, fig.align="center, fig.cap="Plot of the transformed estimated base survival function against event time", fig.pos="!htbp">>
+<<6, fig.align="center", fig.cap="Plot of the values of the transformed estimated base survival function against failure times", fig.pos="!htbp",fig.width=4, fig.height=3>>=
+@
 
 The baseline survival function  will be of the form
 
@@ -98,6 +99,7 @@ The transformation $t^* = \ln(t)$ and $R_0(t^*)^* = \ln(-\ln(R_0(t^*)))$ gives u
 This enables us to check the assumption of Weibull distributed lifetimes by simply checking whether the curve obtained from plotting $R_0(t^*)^*$ against $t^*$. This is done in figure \ref{fig:61}, and we can clearly see that there's a linear relation between the two quantities. This indicates that the lifetimes conditional on the covariates are Weibull distributed. 
 
 \section{}
+
 
 
 \section{}

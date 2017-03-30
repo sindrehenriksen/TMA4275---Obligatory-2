@@ -60,7 +60,7 @@ lines(time_1, logminlogR_1, col=2)
 legend("bottomright", legend=c("x2 = 0", "x2 = 1"), col=c(1, 2), pch=1)
 
 plot(log(time_0), logminlogR_0, 
-     xlab="time",
+     xlab="log(time)",
      ylab="logminlogR")
 points(log(time_1), logminlogR_1, col=2)
 legend("bottomright", legend=c("x2 = 0", "x2 = 1"), col=c(1, 2), pch=1)
@@ -81,8 +81,9 @@ smoothSEcurve(sres_ex[,2],failure_times)
 cox.zph(coxreg_ex)
 
 ## ---- 5
-par(mfrow=c(2,2))
 R0 = survfit(coxreg_ex)
+
+par(mfrow=c(2,2))
 plot(R0, 
      xlab='y',
      ylab=expression('R'[0]))
@@ -106,6 +107,10 @@ smoothSEcurve(log2(R0$time),log2(-log2(R0$surv)))
 
 
 ## ---- 7
+weib_reg = survreg(coxreg_ex, dist='weibull')
+summary(coxreg_ex)
+summary(weib_reg)
+# intuition?
 
 ## ---- 8
 
