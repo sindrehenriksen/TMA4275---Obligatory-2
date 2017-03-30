@@ -102,8 +102,8 @@ par(mfrow=c(1,1))
 
 ## ---- 6
 
-plot(log2(-log2(R0$surv)),log2(R0$time),xlab='t*',ylab=expression('R*'[0]))
-smoothSEcurve(log2(R0$time),log2(-log2(R0$surv)))
+plot(log(-log(R0$surv)),log(R0$time),xlab='t*',ylab=expression('R*'[0]))
+smoothSEcurve(log(R0$time),log(-log(R0$surv)))
 
 
 ## ---- 7
