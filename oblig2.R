@@ -66,9 +66,7 @@ points(log(time_1), logminlogR_1, col=2)
 legend("bottomright", legend=c("x2 = 0", "x2 = 1"), col=c(1, 2), pch=1)
 
 ## ---- 3
-new_data <- data
-new_data$x1 = log(new_data$x1)
-coxreg_ex <- coxph(Surv(y, delta)~x1 + x2, data=new_data)
+coxreg_ex <- coxph(Surv(y, delta)~log(x1) + x2)
 summary(coxreg_ex)
 
 ## ---- 4
@@ -88,29 +86,25 @@ plot(R0,
      xlab='y',
      ylab=expression('R'[0]))
 
-plot(survfit(coxreg_ex, newdata=data.frame(x1=c(0.2), x2)),
+plot(survfit(coxreg_ex, newdata=data.frame(x1=0.2, x2)),
      xlab='y',
      ylab='R')
-plot(survfit(coxreg_ex, newdata=data.frame(x1=c(1), x2)),
+plot(survfit(coxreg_ex, newdata=data.frame(x1=1, x2)),
     xlab='y',
     ylab='R')
-# plot(c(0,R0$time), c(1, R0$surv^exp(coxreg_ex$coefficients[['x1']] + coxreg_ex$coefficients[['x2']])), type='s')
-plot(survfit(coxreg_ex, newdata=data.frame(x1=c(5), x2)),
+plot(survfit(coxreg_ex, newdata=data.frame(x1=5, x2)),
      xlab='y',
      ylab='R')
 par(mfrow=c(1,1))
 
 ## ---- 6
-
 plot(log2(-log2(R0$surv)),log2(R0$time),xlab='t*',ylab=expression('R*'[0]))
 smoothSEcurve(log2(R0$time),log2(-log2(R0$surv)))
 
-
 ## ---- 7
-weib_reg = survreg(coxreg_ex, dist='weibull')
+weib_reg = survreg(Surv(y, delta)~log(x1) + x2, dist='weibull')
 summary(coxreg_ex)
 summary(weib_reg)
-# intuition?
 
 ## ---- 8
 
