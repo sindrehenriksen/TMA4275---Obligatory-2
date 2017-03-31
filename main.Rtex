@@ -40,24 +40,24 @@ options(digits = 2)
 \section{}
 The R-code below fits a Cox proportional hazards model to the provided data without any covariates included and plots the Martingale residuals against the covariates and the transformation $ln(x_1)$. The plots in figure \ref{fig:11} and figure \ref{fig:12} indicate that the relationship between the response variable $y$ and the natural logarithm of the covariate $x_1$ is closer to being linear than the relationship between $y$ and $x_1$.
 
-<<1, fig.align="center", fig.height=3, fig.width=4, fig.cap=c("Plot of the Martingale residuals versus $x_1$.", "Plot of the Martingale residuals versus $ln(x_1)$.", "Plot of the Martingale resiudals versus $x_2$."), fig.pos="htbp">>=
+<<1, fig.align="center", fig.height=3, fig.width=4, fig.cap=c("Plot of the Martingale residuals versus $x2$.", "Plot of the Martingale residuals versus $ln(x_1)$.", "Plot of the Martingale resiudals versus $x_2$."), fig.pos="htbp">>=
 @
 
 
 \section{}
 The covariate $x_2$ is included in the model and the Cox PH model is fitted. The Schoenfeld residuals is then calculated and plotted against the failure times. The Schoenfeld residuals can be used for checking the assumption of proportional hazards. For a correct model one would expect the residuals to be centered around zero. This is not the case in our plot, seen in \ref{fig:21}, where the LOESS line clearly deviates from zero. The assumption of PH might therefore be incorrect. 
 
-<<2, fig.align="center", fig.width=4, fig.height=3, fig.cap=c("The Schoenfeld residuals plotted against the observed failure times. A LOESS for the data is also shown.", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ (black) and $x_2 = 1$ (red) against time.", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ (black) and $x_2 = 1$ (red) against ln(time)."), fig.pos="!htbp">>=
+<<2, fig.align="center", fig.width=4, fig.height=3, fig.cap=c("The Schoenfeld residuals plotted against the observed failure times. A LOESS for the data is also shown.", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ and $x_2 = 1$ against time.", "Plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ and $x_2 = 1$ against ln(time)."), fig.pos="!htbp">>=
 @
 
-Figure \ref{fig:22} shows a plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ and $x_2 = 1$ against time. If the data is from a Weibull-distribution, we would expect the vertical distance between the two lines to be constant and equal to $\beta_2$. The same is true for the plot against $ln(y)$ in figure \ref{fig:23}. Furthermore, the points in the last plot should be on a straight line. We would definitely not reject the possibility of an underlying Weibull-distribution based on any of these tests, especially if the final point (at time $y \approx 14.2$) is disregarded.
+Figure \ref{fig:22} shows a plot of the log-minus-log of the Kaplan-Meier estimators $\hat{\hat{\beta}}$ for $x_2 = 0$ and $x_2 = 1$ against time. If the data is from a Weibull-distribution, we would expect the vertical distance between the two lines to be constant and equal to $\beta_2$. The same is true for the plot against $ln(y)$ in figure \ref{fig:23}. Furthermore, the points in the last plot should be on a straight line. We would definitely not reject the possibility of an underlying Weibull-distribution based on any of these tests, especially if the final point (at time $y \approx 14.2$) is disregarded.
 
 
 \section{}
 <<3>>=
 @
 
-By looking at the plots of the covariates against their associated Martingale residuals in figure \ref{fig:21} and \ref{fig:22} , we see that taking the logarithm of $x_1$ produces a LOESS line that suggest a linear relation between the covariate and it's residual. We therefore choose to include $ln(x_1)$ as a covariate instead of $x_1$. A new Cox PH model is then fitted using the transformed covariate $ln(x_1)$ and the ordinary covariate $x_2$. The covariate $x_2$ is a binary variable and the model does not benefit from transforming this. Conducting a Wald test and a likelihood ratio test with a null hypotheses stating that $\mathbf{\beta}_k = 0$ leaves us with very low p - values and we therefore reject the null hypothesis. The p - values can be seen by calling \texttt{summary(coxreg\_ex)}, as in the code.
+By looking at the plots of the covariates against their associated Martingale residuals in figure \ref{fig:11} and \ref{fig:12} , we see that taking the logarithm of $x_1$ produces a LOESS line that suggest a linear relation between the covariate and it's residual. We therefore choose to include $ln(x_1)$ as a covariate instead of $x_1$. A new Cox PH model is then fitted using the transformed covariate $ln(x_1)$ and the ordinary covariate $x_2$. The covariate $x_2$ is a binary variable and the model does not benefit from transforming this. Conducting a Wald test and a likelihood ratio test with a null hypotheses stating that $\mathbf{\beta}_k = 0$ leaves us with very low p - values and we therefore reject the null hypothesis. The p - values can be seen by calling \texttt{summary(coxreg\_ex)}, as in the code.
 
 %The p-value found by the Wald test is, while still very small, significantly higher than the one produced by the likelihood ratio test. %The difference in p-values may come from incorrect assumptions regarding the sampling of covariates. 
 
@@ -70,11 +70,11 @@ By looking at the plots of the covariates against their associated Martingale re
 
 The extended model produces Schoenfeld residuals that seem to be more evenly distributed about zero than the previous model. This suggest that the decision of transforming $x_1$ and including $x_2$ were reasonable choices. The LOESS lines in both plots changes less rapidly and are closer to zero. 
 
-The formal hypothesis test of the PH assumption leads us to reject the null hypothesis that suggests that the PH assumption is not correct. The p-value obtained by calling \texttt{cox.zph} leads us to reject even at significance level 0.01.
+The formal hypothesis test of the PH assumption leads us to reject the null hypothesis that suggests that the PH assumption is not correct. The p-value obtained by calling \texttt{cox.zph} leads us to reject the null hypothesis even at significance level 0.01 for the test on the full model. The full model includes both covariates, which is mainly what we're interested in. 
 
 
 \section{}
-Here we produce an estimate of the baseline survival function $\hat{R_0}(t)$ using the Breslow estimator (standard for \texttt{coxph()} when there are no ties), and estimates of the survival function $\hat{R}(t)$ for different values of the covariates $x1$ and $x_2$.
+Here we produce an estimate of the baseline survival function $\hat{R_0}(t)$ using the Breslow estimator (which is standard for \texttt{coxph()} when there are no ties), and estimates of the survival function $\hat{R}(t)$ for different values of the covariates $x1$ and $x_2$.
 
 <<5, fig.align="center", fig.cap="Upper left: Breslow estimator of $\\hat{R_0}(t)$ for the given data. Upper right: Estimate of $\\hat{R}(t)$ for $x1 = 0.2$ and $x_2 = 0$ (upper line), $x_2 = 1$ (lower line). Lower left:  $x1 = 1$ and $x_2 = 0$ (upper line), $x_2 = 1$ (lower line). Lower right: $x1 = 5.$", fig.pos="!htbp">>=
 @
@@ -85,11 +85,9 @@ Here we produce an estimate of the baseline survival function $\hat{R_0}(t)$ usi
 @
 
 The baseline survival function  will be of the form
-
 \begin{equation}
     R_0(t) = \exp(-(t/\theta)^{\alpha}/\exp(\mathbf{\beta}^{T}\mathbf{x}))
 \end{equation}
-
 if the lifetimes conditional on the covariate values are Weibull - distributed.
 
 
@@ -99,7 +97,7 @@ The transformation $t^* = \ln(t)$ and $R_0(t^*)^* = \ln(-\ln(R_0(t^*)))$ gives u
     R_0(t^*)^* = {\alpha}(t^* - \ln(\theta)) - \mathbf{\beta}^T\mathbf{x}.
 \end{equation}
 
-This enables us to check the assumption of Weibull distributed lifetimes by simply checking whether the curve obtained from plotting $R_0(t^*)^*$ against $t^*$. This is done in figure \ref{fig:61}, and we can clearly see that there's a linear relation between the two quantities. This indicates that the lifetimes conditional on the covariates are Weibull distributed. 
+This enables us to check the assumption of Weibull distributed lifetimes by simply checking whether the curve obtained from plotting $R_0(t^*)^*$ against $t^*$. This is done in figure \ref{fig:6}, and we can clearly see that there's a linear relation between the two quantities. This indicates that the lifetimes conditional on the covariates are Weibull distributed. 
 
 
 \section{}
@@ -108,15 +106,18 @@ This enables us to check the assumption of Weibull distributed lifetimes by simp
 @
 
 
-Estimates of $\beta_1$ and $\beta_2$ is obtained by fitting a parametric Weibull model using the function \texttt{survreg}. We want to obtain an estimate of the standard error of the $\beta^~_1$ and $\beta^~_1$ from the Cox proportional hazard model using the parameter estimates from the Weibull regression. These quantities are related by $\beta^~ = -\beta/\sigma$. This enables us to estimate the variance of $\beta_1$ and $\beta_2$ by writing them as a function of the estimated Weibull parameters and utilizing the approximation provided by the delta method. This is carried out in the code, and we end up with estimated standard errors \Sexpr{se_beta_c1} and \Sexpr{se_beta_c2} for $\beta_1$ and $\beta_2$ respectively. 
+Estimates of $\beta_1$ and $\beta_2$ is obtained by fitting a parametric Weibull model using the function \texttt{survreg}. We want to obtain an estimate of the standard error of the $\tilde{\beta}_1$ and $\tilde{\beta}_1$ from the Cox proportional hazard model using the parameter estimates from the Weibull regression. These quantities are related by $\tilde{\beta}} = -\beta/\sigma$. This enables us to estimate the variance of $\beta_1$ and $\beta_2$ by writing them as a function of the estimated Weibull parameters and utilizing the approximation provided by the delta method. This is carried out in the code, and we end up with estimated standard errors \Sexpr{se_beta_c1} and \Sexpr{se_beta_c2} for $\beta_1$ and $\beta_2$ respectively. These are very similar values to the standard errors obtained by looking at the semi-parametric Cox model, seen by calling \texttt{summary} on the fitted Cox model. This contributes to strengthen our belief that the we're currently looking at a Weibull distribution since the relation we expect to see if the lifetimes conditional on $x2$ and $\ln(x1)$ are Weibull distributed is observed.
 
 
 \section{}
 
-The lifetimes in question all come from the same distribution. The hazard rate function $z(t)$ must therefore be equal even for the case where $\mathbf{x}$ isn't. This leads to the equation $z_0^{'}(t)\exp({\beta}^{'}_1x_1)\exp(\beta^{' }_2x_2) = z_0^*(t)\exp(\beta^*_2x_2)$. Rearranging the terms leaves us with $z_0^{'}(t)/z_0^{*}(t) = \exp(\beta_1^*/\beta_1^{'})\exp(\beta_2^{*}x_2)$, which is a contradiction since the right side obviously is a function of the covariate $x_2$. The proportional hazard is therefore violated and we conclude that the lifetimes conditional on $x_2$ can not be Weibull distributed if the lifetimes conditional on $x_1$ and $x_2$ are Weibull distributed. 
+%The lifetimes in question all come from the same distribution. The hazard rate function $z(t)$ must therefore be equal %even for the case where $\mathbf{x}$ isn't. This leads to the equation $z_0^{'}(t)\exp({\beta}^{'}_1x_1)\exp(\beta^{' %}_2x_2) = z_0^*(t)\exp(\beta^*_2x_2)$. Rearranging the terms leaves us with $z_0^{'}(t)/z_0^{*}(t) = %\exp(\beta_1^*/\beta_1^{'})\exp(\beta_2^{*}x_2)$, which is a contradiction since the right side obviously is a %function of the covariate $x_2$. The proportional hazard is therefore violated and we conclude that the lifetimes %conditional on $x_2$ can not be Weibull distributed if the lifetimes conditional on $x_1$ and $x_2$ are Weibull %distributed. 
 
 
 \section{}
+
+Removing a covariate 
+
 
 
 \end{document}
