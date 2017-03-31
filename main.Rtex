@@ -115,8 +115,8 @@ Estimates of $\beta_1$ and $\beta_2$ is obtained by fitting a parametric Weibull
 
 
 \section{}
-
-Removing a covariate 
+ 
+If the underlying distribution of a data set is known, one covariate is missing and one is interested in constructing a model as similar to the underlying distribution as possible one would use a parametric model. If the underlying distribution is Weibull then a parametric Weibull regression would be suitable. The assumptions made when constructing a Weibull model are fairly rigid and could approximate the underlying distribution despite the missing covariate. The "intercept", $\beta_0$, would estimated in way that compensates for the missing covariate, and although the model would lose some flexibility it would still be appropriate. The Weibull model would work well in the average case, where the missing covariate would be close to it's average value. In points where the missing covariate accounts for a lot of change in response one would see that the model isn't optimal, but it would work well in less unusual cases. the  A Cox proportional hazards model would not represent the underlying data as well as the Weibull regression since it doesn't make any assumptions about the underlying distribution and would therefore do a worse job of recreating the underlying distribution. The Cox proportional hazards model doesn't make sure the model satisfies the proportional hazards assumption, but it works well in cases where the assumption is satisfied. This wouldn't necessarily be the case with a missing covariate. The baseline hazard function is also estimated by using the estimated $\beta$ and the covariates and could change from it's optimal form due to missing information.
 
 
 
