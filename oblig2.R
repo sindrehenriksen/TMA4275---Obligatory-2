@@ -43,13 +43,15 @@ smoothSEcurve(sres2,failure_times)
 
 Rhat_0 <- survfit(Surv(y) ~ x2, subset={x2==0})
 n_0 = length(Rhat_0$surv)
-Rhathat_0 <- (tail(Rhat_0$surv, n_0-1) + head(Rhat_0$surv, n_0-1)) / 2
+Rhathat_0 <- (tail(Rhat_0$surv, n_0-1) + 
+                head(Rhat_0$surv, n_0-1)) / 2
 time_0 <- tail(Rhat_0$time, n_0-1)
 logminlogR_0 <- log(-log(Rhathat_0))
 
 Rhat_1 <- survfit(Surv(y) ~ x2, subset={x2==1})
 n_1 = length(Rhat_1$surv)
-Rhathat_1 <- (tail(Rhat_1$surv, n_1-1) + head(Rhat_1$surv, n_1-1)) / 2
+Rhathat_1 <- (tail(Rhat_1$surv, n_1-1) +
+                head(Rhat_1$surv, n_1-1)) / 2
 time_1 <- tail(Rhat_1$time, n_1-1)
 logminlogR_1 <- log(-log(Rhathat_1))
 
@@ -57,13 +59,15 @@ plot(time_0, logminlogR_0, type="l",
      xlab="time",
      ylab="logminlogR")
 lines(time_1, logminlogR_1, col=2)
-legend("bottomright", legend=c("x2 = 0", "x2 = 1"), col=c(1, 2), pch=1)
+legend("bottomright", legend=c("x2 = 0", "x2 = 1"),
+       col=c(1, 2), pch=1)
 
 plot(log(time_0), logminlogR_0, 
      xlab="log(time)",
      ylab="logminlogR")
 points(log(time_1), logminlogR_1, col=2)
-legend("bottomright", legend=c("x2 = 0", "x2 = 1"), col=c(1, 2), pch=1)
+legend("bottomright", legend=c("x2 = 0", "x2 = 1"),
+       col=c(1, 2), pch=1)
 
 ## ---- 3
 coxreg_ex <- coxph(Surv(y, delta)~log(x1) + x2)
@@ -98,7 +102,8 @@ plot(survfit(coxreg_ex, newdata=data.frame(x1=5, x2)),
 par(mfrow=c(1,1))
 
 ## ---- 6
-plot(log(-log(R0$surv)),log(R0$time),xlab='t*',ylab=expression('R*'[0]))
+plot(log(-log(R0$surv)),log(R0$time),xlab='t*',
+     ylab=expression('R*'[0]))
 smoothSEcurve(log(R0$time),log(-log(R0$surv)))
 
 ## ---- 7
