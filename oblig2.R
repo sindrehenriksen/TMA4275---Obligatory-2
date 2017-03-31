@@ -102,9 +102,33 @@ plot(log(-log(R0$surv)),log(R0$time),xlab='t*',ylab=expression('R*'[0]))
 smoothSEcurve(log(R0$time),log(-log(R0$surv)))
 
 ## ---- 7
-weib_reg = survreg(Surv(y, delta)~log(x1) + x2, dist='weibull')
+weib_reg <- survreg(Surv(y, delta)~log(x1) + x2, dist='weibull')
 summary(coxreg_ex)
 summary(weib_reg)
+n <- length(weib_reg$y[,1])
+beta_w1 <- weib_reg$coefficients[2]
+beta_w2 <- weib_reg$coefficients[3]
+scale <- weib_reg$scale
+grad_g1 <- matrix(data = c(-1/scale, beta_w1/scale), nrow = 1)
+cov_b1_lnscale <- matrix(data = c(0,0,0,0), nrow=2)
+cov_b1_lnscale[2,1] <- vcov(weib_reg)[2,4]
+cov_b1_lnscale[1,2] <- vcov(weib_reg)[2,4]
+cov_b1_lnscale[1,1] <- vcov(weib_reg)[2,2]
+cov_b1_lnscale[2,2] <- vcov(weib_reg)[4,4]
+var_beta_c1 <- grad_g1%*%cov_b1_lnscale%*%t(grad_g1)
+se_beta_c1 <- sqrt(var_beta_c1)
+
+grad_g2 <- matrix(data = c(-1/scale, beta_w2/scale), nrow = 1)
+cov_b2_lnscale <- matrix(data = c(0,0,0,0), nrow=2)
+cov_b2_lnscale[2,1] <- vcov(weib_reg)[3,4]
+cov_b2_lnscale[1,2] <- vcov(weib_reg)[3,4]
+cov_b2_lnscale[1,1] <- vcov(weib_reg)[3,3]
+cov_b2_lnscale[2,2] <- vcov(weib_reg)[4,4]
+var_beta_c2 <- grad_g2%*%cov_b2_lnscale%*%t(grad_g2)
+se_beta_c2 <- sqrt(var_beta_c2)
+
+se_beta_c1
+se_beta_c2
 
 ## ---- 8
 
