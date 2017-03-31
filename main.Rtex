@@ -104,11 +104,11 @@ This enables us to check the assumption of Weibull distributed lifetimes by simp
 
 \section{}
 
-
-Estimates of $\beta_1$ and $\beta_2$ is obtained by fitting a parametric Weibull model using the function \texttt{survreg}. We want to obtain an estimate of the standard error of the $\beta^~_1$ and $\beta^~_1$ from the Cox proportional hazard model using the parameter estimates from the Weibull regression. These quantities are related by $\beta^~ = -\beta/\sigma$. This enables us to estimate the variance of $\beta_1$ and $\beta_2$ by writing them as a function of the estimated Weibull parameters and utilizing the approximation provided by the delta method. The 
-
 <<7>>=
 @
+
+
+Estimates of $\beta_1$ and $\beta_2$ is obtained by fitting a parametric Weibull model using the function \texttt{survreg}. We want to obtain an estimate of the standard error of the $\beta^~_1$ and $\beta^~_1$ from the Cox proportional hazard model using the parameter estimates from the Weibull regression. These quantities are related by $\beta^~ = -\beta/\sigma$. This enables us to estimate the variance of $\beta_1$ and $\beta_2$ by writing them as a function of the estimated Weibull parameters and utilizing the approximation provided by the delta method. This is carried out in the code, and we end up with estimated standard errors \Sexpr{se_beta_c1} and \Sexpr{se_beta_c2} for $\beta_1$ and $\beta_2$ respectively. 
 
 
 \section{}
