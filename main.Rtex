@@ -36,11 +36,13 @@ options(digits = 2)
 <<echo=FALSE, message = FALSE, preliminary>>=
 @
 
+
 \section{}
 The R-code below fits a Cox proportional hazards model to the provided data without any covariates included and plots the Martingale residuals against the covariates and the transformation $ln(x_1)$. The plots in figure \ref{fig:11} and figure \ref{fig:12} indicate that the relationship between the response variable $y$ and the natural logarithm of the covariate $x_1$ is closer to being linear than the relationship between $y$ and $x_1$.
 
 <<1, fig.align="center", fig.height=3, fig.width=4, fig.cap=c("Plot of the Martingale residuals versus $x_1$.", "Plot of the Martingale residuals versus $ln(x_1)$.", "Plot of the Martingale resiudals versus $x_2$."), fig.pos="htbp">>=
 @
+
 
 \section{}
 The covariate $x_2$ is included in the model and the Cox PH model is fitted. The Schoenfeld residuals is then calculated and plotted against the failure times. The Schoenfeld residuals can be used for checking the assumption of proportional hazards. For a correct model one would expect the residuals to be centered around zero. This is not the case in our plot, seen in \ref{fig:21}, where the LOESS line clearly deviates from zero. The assumption of PH might therefore be incorrect. 
@@ -50,8 +52,8 @@ The covariate $x_2$ is included in the model and the Cox PH model is fitted. The
 
 Figure \ref{fig:22} shows a plot of the log-minus-log of the Kaplan-Meier estimators $\\hat{\\hat{\\beta}}$ for $x_2 = 0$ and $x_2 = 1$ against time. If the data is from a Weibull-distribution, we would expect the vertical distance between the two lines to be constant and equal to $\beta_2$. The same is true for the plot against $ln(y)$ in figure \ref{fig:23}. Furthermore, the points in the last plot should be on a straight line. We would definitely not reject the possibility of an underlying Weibull-distribution based on any of these tests, especially if the final point (at time $y \approx 14.2$) is disregarded.
 
-\section{}
 
+\section{}
 <<3>>=
 @
 
@@ -61,23 +63,24 @@ By looking at the plots of the covariates against their associated Martingale re
 
 % Wald test relies on the assumption of a  normally distributed $\beta$ which might not be the case. This is in turn based on the assumption that maximum likelihood estimators are normally distributed when the number of samples increases. The likelihood ratio test does not make any such assumptions
 
-\section{}
 
-<<4, fig.align="center", fig.width=4, fig.height=3, fig.cap=c("Plots of Schoenfeld residuals for covariate $x1$ against failure times", "Plots of Schoenfeld residuals for covariate $x2$ against failure times"), fig.pos="!htbp">>=
+\section{}
+<<4, fig.align="center", fig.width=4, fig.height=3, fig.cap=c("Plots of Schoenfeld residuals for covariate $x1$ against failure times", "Plots of Schoenfeld residuals for covariate $x_2$ against failure times"), fig.pos="!htbp">>=
 @
 
 The extended model produces Schoenfeld residuals that seem to be more evenly distributed about zero than the previous model. This suggest that the decision of transforming $x_1$ and including $x_2$ were reasonable choices. The LOESS lines in both plots changes less rapidly and are closer to zero. 
 
 The formal hypothesis test of the PH assumption leads us to reject the null hypothesis that suggests that the PH assumption is not correct. The p-value obtained by calling \texttt{cox.zph} leads us to reject even at significance level 0.01.
 
-\section{}
-Here we produce an estimate of the baseline survival function $\hat{R_0}(t)$ using the Breslow estimator (standard for \texttt{coxph()} when there are no ties), and estimates of the survival function $\hat{R}(t)$ for different values of the covariates $x1$ and $x2$.
 
-<<5, fig.align="center", fig.cap="Upper left: Breslow estimator of $\\hat{R_0}(t)$ for the given data. Upper right: Estimate of $\\hat{R}(t)$ for $x1 = 0.2$ and $x2 = 0$ (upper line), $x2 = 1$ (lower line). Lower left:  $x1 = 1$ and $x2 = 0$ (upper line), $x2 = 1$ (lower line). Lower right: $x1 = 5.$", fig.pos="!htbp">>=
+\section{}
+Here we produce an estimate of the baseline survival function $\hat{R_0}(t)$ using the Breslow estimator (standard for \texttt{coxph()} when there are no ties), and estimates of the survival function $\hat{R}(t)$ for different values of the covariates $x1$ and $x_2$.
+
+<<5, fig.align="center", fig.cap="Upper left: Breslow estimator of $\\hat{R_0}(t)$ for the given data. Upper right: Estimate of $\\hat{R}(t)$ for $x1 = 0.2$ and $x_2 = 0$ (upper line), $x_2 = 1$ (lower line). Lower left:  $x1 = 1$ and $x_2 = 0$ (upper line), $x_2 = 1$ (lower line). Lower right: $x1 = 5.$", fig.pos="!htbp">>=
 @
 
-\section{}
 
+\section{}
 <<6, fig.align="center", fig.cap="Plot of the values of the transformed estimated base survival function against failure times", fig.pos="!htbp",fig.width=4, fig.height=3>>=
 @
 
@@ -98,13 +101,22 @@ The transformation $t^* = \ln(t)$ and $R_0(t^*)^* = \ln(-\ln(R_0(t^*)))$ gives u
 
 This enables us to check the assumption of Weibull distributed lifetimes by simply checking whether the curve obtained from plotting $R_0(t^*)^*$ against $t^*$. This is done in figure \ref{fig:61}, and we can clearly see that there's a linear relation between the two quantities. This indicates that the lifetimes conditional on the covariates are Weibull distributed. 
 
-\section{}
-
-
 
 \section{}
 
 
+Estimates of $\beta_1$ and $\beta_2$ is obtained by fitting a parametric Weibull model using the function \texttt{survreg}. We want to obtain an estimate of the standard error of the $\beta^~_1$ and $\beta^~_1$ from the Cox proportional hazard model using the parameter estimates from the Weibull regression. These quantities are related by $\beta^~ = -\beta/\sigma$. This enables us to estimate the variance of $\beta_1$ and $\beta_2$ by writing them as a function of the estimated Weibull parameters and utilizing the approximation provided by the delta method. The 
+
+<<7>>=
+@
+
+
 \section{}
+
+The lifetimes in question all come from the same distribution. The hazard rate function $z(t)$ must therefore be equal even for the case where $\mathbf{x}$ isn't. This leads to the equation $z_0^{'}(t)\exp({\beta}^{'}_1x_1)\exp(\beta^{' }_2x_2) = z_0^*(t)\exp(\beta^*_2x_2)$. Rearranging the terms leaves us with $z_0^{'}(t)/z_0^{*}(t) = \exp(\beta_1^*/\beta_1^{'})\exp(\beta_2^{*}x_2)$, which is a contradiction since the right side obviously is a function of the covariate $x_2$. The proportional hazard is therefore violated and we conclude that the lifetimes conditional on $x_2$ can not be Weibull distributed if the lifetimes conditional on $x_1$ and $x_2$ are Weibull distributed. 
+
+
+\section{}
+
 
 \end{document}
