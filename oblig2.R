@@ -127,9 +127,6 @@ cov_b2_lnscale[2,2] <- vcov(weib_reg)[4,4]
 var_beta_c2 <- grad_g2%*%cov_b2_lnscale%*%t(grad_g2)
 se_beta_c2 <- sqrt(var_beta_c2)
 
-se_beta_c1
-se_beta_c2
-
 ## ---- 8
 
 ## ---- 9
